@@ -154,7 +154,7 @@ export function CalendarView({ events }: CalendarViewProps) {
             <Filter className="h-4 w-4" /> Filtros:
           </div>
           
-          <Select value={clientFilter} onValueChange={setClientFilter}>
+          <Select value={clientFilter} onValueChange={(val) => val && setClientFilter(val)}>
             <SelectTrigger className="h-9 w-[110px] text-xs shrink-0">
               <SelectValue placeholder="Cliente" />
             </SelectTrigger>
@@ -165,7 +165,7 @@ export function CalendarView({ events }: CalendarViewProps) {
             </SelectContent>
           </Select>
 
-          <Select value={campaignFilter} onValueChange={setCampaignFilter}>
+          <Select value={campaignFilter} onValueChange={(val) => val && setCampaignFilter(val)}>
             <SelectTrigger className="h-9 w-[110px] text-xs shrink-0">
               <SelectValue placeholder="Campaña" />
             </SelectTrigger>
@@ -177,7 +177,7 @@ export function CalendarView({ events }: CalendarViewProps) {
             </SelectContent>
           </Select>
 
-          <Select value={typeFilter} onValueChange={setTypeFilter}>
+          <Select value={typeFilter} onValueChange={(val) => val && setTypeFilter(val)}>
             <SelectTrigger className="h-9 w-[110px] text-xs shrink-0">
               <SelectValue placeholder="Canal" />
             </SelectTrigger>
@@ -195,7 +195,7 @@ export function CalendarView({ events }: CalendarViewProps) {
             </SelectContent>
           </Select>
 
-          <Select value={responsibleFilter} onValueChange={setResponsibleFilter}>
+          <Select value={responsibleFilter} onValueChange={(val) => val && setResponsibleFilter(val)}>
             <SelectTrigger className="h-9 w-[110px] text-xs shrink-0">
               <SelectValue placeholder="Responsable" />
             </SelectTrigger>
@@ -214,7 +214,7 @@ export function CalendarView({ events }: CalendarViewProps) {
 
           <div className="w-px h-6 bg-zinc-200 dark:bg-zinc-800 mx-1 hidden sm:block shrink-0" />
 
-          <Select value={view} onValueChange={setView}>
+          <Select value={view} onValueChange={(val) => val && setView(val as "mes" | "semana" | "dia")}>
             <SelectTrigger className="h-9 w-[100px] text-xs font-semibold shrink-0">
               <SelectValue placeholder="Vista" />
             </SelectTrigger>

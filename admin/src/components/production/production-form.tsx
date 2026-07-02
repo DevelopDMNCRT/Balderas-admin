@@ -8,7 +8,7 @@ import { format } from "date-fns"
 import { es } from "date-fns/locale"
 import { cn } from "@/lib/utils"
 
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -50,8 +50,8 @@ const formSchema = z.object({
   formato: z.string().min(1, "Campo requerido"),
   medidas: z.string().optional(),
   responsable: z.string().min(1, "Campo requerido"),
-  fechaSolicitud: z.date({ required_error: "Selecciona una fecha" }),
-  fechaEntrega: z.date({ required_error: "Selecciona una fecha" }),
+  fechaSolicitud: z.date({ message: "Selecciona una fecha" }),
+  fechaEntrega: z.date({ message: "Selecciona una fecha" }),
   fechaAprobacion: z.date().optional().nullable(),
   estatus: z.string().min(1, "Campo requerido"),
   archivoFinal: z.string().optional(),
@@ -192,31 +192,28 @@ export function ProductionForm({ initialData, onSubmitData, onCancel }: Producti
               <FormItem className="flex flex-col">
                 <FormLabel>Fecha de Solicitud</FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
+                  <FormControl>
+                    <PopoverTrigger
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
                           format(field.value, "PPP", { locale: es })
                         ) : (
                           <span>Elige una fecha</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
+                    </PopoverTrigger>
+                  </FormControl>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) => false}
-                      initialFocus
                     />
                   </PopoverContent>
                 </Popover>
@@ -232,31 +229,28 @@ export function ProductionForm({ initialData, onSubmitData, onCancel }: Producti
               <FormItem className="flex flex-col">
                 <FormLabel>Fecha de Entrega Promesa</FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
+                  <FormControl>
+                    <PopoverTrigger
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
                           format(field.value, "PPP", { locale: es })
                         ) : (
                           <span>Elige una fecha</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
+                    </PopoverTrigger>
+                  </FormControl>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) => false}
-                      initialFocus
                     />
                   </PopoverContent>
                 </Popover>
@@ -272,31 +266,28 @@ export function ProductionForm({ initialData, onSubmitData, onCancel }: Producti
               <FormItem className="flex flex-col">
                 <FormLabel>Fecha de Aprobación (Opcional)</FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
+                  <FormControl>
+                    <PopoverTrigger
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
                           format(field.value, "PPP", { locale: es })
                         ) : (
                           <span>Elige una fecha</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
+                    </PopoverTrigger>
+                  </FormControl>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value || undefined}
                       onSelect={field.onChange}
                       disabled={(date) => false}
-                      initialFocus
                     />
                   </PopoverContent>
                 </Popover>

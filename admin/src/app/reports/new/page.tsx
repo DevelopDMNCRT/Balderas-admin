@@ -53,10 +53,8 @@ export default function NewReportPage() {
       {/* Header */}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild className="h-8 w-8">
-            <Link href="/reports">
-              <ArrowLeft className="h-4 w-4" />
-            </Link>
+          <Button variant="ghost" size="icon" render={<Link href="/reports" />} className="h-8 w-8">
+            <ArrowLeft className="h-4 w-4" />
           </Button>
           <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
             Configurar Reporte
@@ -236,8 +234,8 @@ export default function NewReportPage() {
             </div>
 
             <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" type="button" asChild className="w-full h-11">
-                <Link href="/reports">Cancelar</Link>
+              <Button variant="outline" type="button" render={<Link href="/reports" />} className="w-full h-11">
+                Cancelar
               </Button>
               <Button type="button" onClick={() => handleDownload('pdf')} variant="outline" className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 w-full h-11">
                 <FileText className="h-4 w-4" />

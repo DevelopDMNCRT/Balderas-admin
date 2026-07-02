@@ -114,10 +114,8 @@ export default function NewEvidencePage() {
       {/* Header */}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild className="h-8 w-8">
-            <Link href="/evidence">
-              <ArrowLeft className="h-4 w-4" />
-            </Link>
+          <Button variant="ghost" size="icon" render={<Link href="/evidence" />} className="h-8 w-8">
+            <ArrowLeft className="h-4 w-4" />
           </Button>
           <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
             Subir Nueva Evidencia
@@ -289,8 +287,8 @@ export default function NewEvidencePage() {
 
             <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-1 md:grid-cols-6 gap-4">
               <div className="col-span-1 md:col-span-3">
-                <Button variant="outline" type="button" asChild className="w-full h-11">
-                  <Link href="/evidence">Cancelar</Link>
+                <Button variant="outline" type="button" render={<Link href="/evidence" />} className="w-full h-11">
+                  Cancelar
                 </Button>
               </div>
               <div className="col-span-1 md:col-span-3">

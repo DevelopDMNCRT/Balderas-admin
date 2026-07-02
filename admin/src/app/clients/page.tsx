@@ -4,16 +4,7 @@ import { useState } from "react"
 import { ClientsTable } from "@/components/clients/clients-table"
 import { ClientForm } from "@/components/clients/client-form"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Plus } from "lucide-react"
-
+import { ArrowLeft, Plus } from "lucide-react"
 export type Client = {
   id: string
   name: string
@@ -69,7 +60,7 @@ const initialClients: Client[] = [
 
 export default function ClientsPage() {
   const [clients, setClients] = useState<Client[]>(initialClients)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [view, setView] = useState<"list" | "form">("list")
   const [editingClient, setEditingClient] = useState<Client | null>(null)
 
   const handleSave = (clientData: Omit<Client, "id">) => {
@@ -78,13 +69,13 @@ export default function ClientsPage() {
     } else {
       setClients([{ ...clientData, id: Math.random().toString(36).substr(2, 9) } as Client, ...clients])
     }
-    setIsDialogOpen(false)
+    setView("list")
     setEditingClient(null)
   }
 
   const handleEdit = (client: Client) => {
     setEditingClient(client)
-    setIsDialogOpen(true)
+    setView("form")
   }
 
   const handleDelete = (id: string) => {
@@ -95,39 +86,51 @@ export default function ClientsPage() {
 
   const handleOpenNew = () => {
     setEditingClient(null)
-    setIsDialogOpen(true)
+    setView("form")
+  }
+
+
+  if (view === "form") {
+    return (
+      <div className="space-y-8">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={() => setView("list")} className="h-8 w-8">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
+              {editingClient ? "Editar Cliente" : "Registrar Nuevo Cliente"}
+            </h1>
+          </div>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-base mt-1 pl-10">
+            {editingClient ? "Modifica los datos del cliente seleccionado." : "Ingresa los datos base del cliente para agregarlo al ERP."}
+          </p>
+        </div>
+        
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm w-full">
+          <ClientForm 
+            initialData={editingClient} 
+            onSubmitData={handleSave} 
+            onCancel={() => setView("list")}
+          />
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Directorio de Clientes</h1>
-          <p className="text-muted-foreground mt-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">Directorio de Clientes</h1>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-base mt-1">
             Administra los clientes, su presupuesto mensual y su estatus operativo.
           </p>
         </div>
         
-        <Dialog open={isDialogOpen} onOpenChange={(open) => {
-          setIsDialogOpen(open)
-          if (!open) setEditingClient(null)
-        }}>
-          <DialogTrigger render={<Button onClick={handleOpenNew} />}>
-            <Plus className="mr-2 h-4 w-4" /> Nuevo Cliente
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[700px]">
-            <DialogHeader>
-              <DialogTitle>{editingClient ? "Editar Cliente" : "Registrar Nuevo Cliente"}</DialogTitle>
-              <DialogDescription>
-                {editingClient ? "Modifica los datos del cliente seleccionado." : "Ingresa los datos base del cliente para agregarlo al ERP."}
-              </DialogDescription>
-            </DialogHeader>
-            <ClientForm 
-              initialData={editingClient} 
-              onSubmitData={handleSave} 
-            />
-          </DialogContent>
-        </Dialog>
+        <Button onClick={handleOpenNew} className="shadow-sm font-semibold h-10 px-4 gap-2 rounded-lg">
+          <Plus className="h-4 w-4" /> Nuevo Cliente
+        </Button>
       </div>
 
       <ClientsTable 

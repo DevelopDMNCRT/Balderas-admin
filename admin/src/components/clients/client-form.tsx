@@ -68,9 +68,10 @@ const defaultValues: ClientFormValues = {
 interface ClientFormProps {
   initialData?: any
   onSubmitData: (data: ClientFormValues) => void
+  onCancel?: () => void
 }
 
-export function ClientForm({ initialData, onSubmitData }: ClientFormProps) {
+export function ClientForm({ initialData, onSubmitData, onCancel }: ClientFormProps) {
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientFormSchema),
     defaultValues: initialData || defaultValues,
@@ -91,23 +92,23 @@ export function ClientForm({ initialData, onSubmitData }: ClientFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-h-[70vh] overflow-y-auto pr-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         
         {/* Información Básica */}
         <div className="space-y-4">
           <h3 className="font-semibold leading-none tracking-tight">Información Comercial</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
             <FormField control={form.control} name="name" render={({ field }) => (
-              <FormItem><FormLabel>Nombre Comercial</FormLabel><FormControl><Input placeholder="Ej. Acme Corp" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Nombre Comercial</FormLabel><FormControl><Input placeholder="Ej. Acme Corp" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="legalName" render={({ field }) => (
-              <FormItem><FormLabel>Razón Social</FormLabel><FormControl><Input placeholder="Ej. Acme de México S.A. de C.V." {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Razón Social</FormLabel><FormControl><Input placeholder="Ej. Acme de México S.A. de C.V." {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="industry" render={({ field }) => (
-              <FormItem><FormLabel>Giro</FormLabel><FormControl><Input placeholder="Ej. Retail" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Giro</FormLabel><FormControl><Input placeholder="Ej. Retail" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="website" render={({ field }) => (
-              <FormItem><FormLabel>Sitio Web</FormLabel><FormControl><Input placeholder="https://" {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-4"><FormLabel>Sitio Web</FormLabel><FormControl><Input placeholder="https://" {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
             )} />
           </div>
         </div>
@@ -115,24 +116,24 @@ export function ClientForm({ initialData, onSubmitData }: ClientFormProps) {
         {/* Contacto y Ubicación */}
         <div className="space-y-4">
           <h3 className="font-semibold leading-none tracking-tight">Contacto y Ubicación</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
             <FormField control={form.control} name="contact" render={({ field }) => (
-              <FormItem><FormLabel>Contacto Principal</FormLabel><FormControl><Input placeholder="Nombre" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Contacto Principal</FormLabel><FormControl><Input placeholder="Nombre" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="email" render={({ field }) => (
-              <FormItem><FormLabel>Correo</FormLabel><FormControl><Input placeholder="correo@ejemplo.com" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Correo</FormLabel><FormControl><Input placeholder="correo@ejemplo.com" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="phone" render={({ field }) => (
-              <FormItem><FormLabel>Teléfono</FormLabel><FormControl><Input placeholder="10 dígitos" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Teléfono</FormLabel><FormControl><Input placeholder="10 dígitos" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="city" render={({ field }) => (
-              <FormItem><FormLabel>Ciudad</FormLabel><FormControl><Input placeholder="Ej. Monterrey" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Ciudad</FormLabel><FormControl><Input placeholder="Ej. Monterrey" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="state" render={({ field }) => (
-              <FormItem><FormLabel>Estado</FormLabel><FormControl><Input placeholder="Ej. Nuevo León" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Estado</FormLabel><FormControl><Input placeholder="Ej. Nuevo León" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="branches" render={({ field }) => (
-              <FormItem><FormLabel>Sucursales</FormLabel><FormControl><Input placeholder="Ej. 5 sucursales" {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Sucursales</FormLabel><FormControl><Input placeholder="Ej. 5 sucursales" {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
             )} />
           </div>
         </div>
@@ -140,24 +141,15 @@ export function ClientForm({ initialData, onSubmitData }: ClientFormProps) {
         {/* Datos de Marketing */}
         <div className="space-y-4">
           <h3 className="font-semibold leading-none tracking-tight">Estrategia y Presupuesto</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
             <FormField control={form.control} name="monthlyBudget" render={({ field }) => (
-              <FormItem><FormLabel>Presupuesto Mensual</FormLabel><FormControl><Input type="number" placeholder="$" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-3"><FormLabel>Presupuesto Mensual</FormLabel><FormControl><Input type="number" placeholder="$" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="annualBudget" render={({ field }) => (
-              <FormItem><FormLabel>Presupuesto Anual</FormLabel><FormControl><Input type="number" placeholder="$" {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="marketingObjective" render={({ field }) => (
-              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Objetivo Principal de Marketing</FormLabel><FormControl><Input placeholder="Ej. Posicionamiento, Leads, Ventas..." {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="socialMedia" render={({ field }) => (
-              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Redes Sociales</FormLabel><FormControl><Input placeholder="Links de redes sociales..." {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="notes" render={({ field }) => (
-              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Notas Estratégicas</FormLabel><FormControl><Textarea placeholder="Estrategias, acuerdos, detalles clave..." {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+              <FormItem className="col-span-1 md:col-span-3"><FormLabel>Presupuesto Anual</FormLabel><FormControl><Input type="number" placeholder="$" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="status" render={({ field }) => (
-              <FormItem>
+              <FormItem className="col-span-1 md:col-span-4">
                 <FormLabel>Estatus</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
@@ -174,10 +166,30 @@ export function ClientForm({ initialData, onSubmitData }: ClientFormProps) {
                 <FormMessage />
               </FormItem>
             )} />
+            <FormField control={form.control} name="marketingObjective" render={({ field }) => (
+              <FormItem className="col-span-1 md:col-span-4"><FormLabel>Objetivo Principal de Marketing</FormLabel><FormControl><Input placeholder="Ej. Posicionamiento, Leads, Ventas..." {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <FormField control={form.control} name="socialMedia" render={({ field }) => (
+              <FormItem className="col-span-1 md:col-span-2"><FormLabel>Redes Sociales</FormLabel><FormControl><Input placeholder="Links de redes sociales..." {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <FormField control={form.control} name="notes" render={({ field }) => (
+              <FormItem className="col-span-1 md:col-span-6"><FormLabel>Notas Estratégicas</FormLabel><FormControl><Textarea placeholder="Estrategias, acuerdos, detalles clave..." {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+            )} />
           </div>
         </div>
 
-        <Button type="submit" className="w-full">Guardar Cliente</Button>
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 pt-4">
+          {onCancel && (
+            <div className="col-span-1 md:col-span-3">
+              <Button type="button" variant="outline" className="w-full h-11" onClick={onCancel}>
+                Cancelar
+              </Button>
+            </div>
+          )}
+          <div className="col-span-1 md:col-span-3">
+            <Button type="submit" className="w-full h-11">Guardar Cliente</Button>
+          </div>
+        </div>
       </form>
     </Form>
   )

@@ -43,14 +43,14 @@ export function MediaMixTable({ lines, onEdit, onDelete }: MediaMixTableProps) {
       <Table>
         <TableHeader className="bg-zinc-50/55 dark:bg-zinc-900/30 border-b border-zinc-200/80 dark:border-zinc-800/80">
           <TableRow>
-            <TableHead className="font-semibold px-6">Campaña</TableHead>
-            <TableHead className="font-semibold">Medio / Canal</TableHead>
-            <TableHead className="font-semibold">Proveedor</TableHead>
-            <TableHead className="font-semibold">Fechas</TableHead>
-            <TableHead className="font-semibold text-right">Costo Total</TableHead>
-            <TableHead className="font-semibold text-right">Alcance (Real / Est.)</TableHead>
-            <TableHead className="font-semibold">Estatus</TableHead>
-            <TableHead className="w-[80px] font-semibold text-center">Acciones</TableHead>
+            <TableHead className="font-semibold px-2 sm:px-4 whitespace-normal min-w-[120px]">Campaña</TableHead>
+            <TableHead className="font-semibold px-2 sm:px-4 whitespace-normal">Medio / Canal</TableHead>
+            <TableHead className="font-semibold px-2 sm:px-4 whitespace-normal">Proveedor</TableHead>
+            <TableHead className="font-semibold px-2 sm:px-4 whitespace-normal">Fechas</TableHead>
+            <TableHead className="font-semibold text-right px-2 sm:px-4 whitespace-normal">Costo Total</TableHead>
+            <TableHead className="font-semibold text-right px-2 sm:px-4 whitespace-normal">Alcance (Real / Est.)</TableHead>
+            <TableHead className="font-semibold px-2 sm:px-4 whitespace-normal">Estatus</TableHead>
+            <TableHead className="w-[80px] font-semibold text-center px-2 sm:px-4 whitespace-normal">Acciones</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -63,37 +63,37 @@ export function MediaMixTable({ lines, onEdit, onDelete }: MediaMixTableProps) {
           ) : (
             current.map((line) => (
               <TableRow key={line.id} className="hover:bg-zinc-50/40 dark:hover:bg-zinc-900/10 transition-colors">
-                <TableCell className="font-bold text-zinc-900 dark:text-zinc-50 px-6 text-sm">
+                <TableCell className="font-bold text-zinc-900 dark:text-zinc-50 px-2 sm:px-4 text-sm whitespace-normal">
                   {line.campaignName}
                 </TableCell>
-                <TableCell>
+                <TableCell className="px-2 sm:px-4 whitespace-normal">
                   <div className="flex flex-col gap-0.5">
                     <div className="flex items-center gap-1.5 text-zinc-900 dark:text-zinc-100 font-semibold text-sm">
-                      {line.mediaType === "Online" ? <Globe className="h-3.5 w-3.5 text-blue-500" /> : <Radio className="h-3.5 w-3.5 text-orange-500" />}
+                      {line.mediaType === "Online" ? <Globe className="h-3.5 w-3.5 text-blue-500 shrink-0" /> : <Radio className="h-3.5 w-3.5 text-orange-500 shrink-0" />}
                       {line.mediaType}
                     </div>
                     <span className="text-zinc-500 dark:text-zinc-400 text-xs font-medium pl-5">{line.channel}</span>
                   </div>
                 </TableCell>
-                <TableCell className="text-zinc-700 dark:text-zinc-300 text-sm">
+                <TableCell className="text-zinc-700 dark:text-zinc-300 text-sm px-2 sm:px-4 whitespace-normal">
                   {line.provider}
                 </TableCell>
-                <TableCell>
+                <TableCell className="px-2 sm:px-4 whitespace-normal">
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium whitespace-nowrap">Del: {line.startDate || "—"}</span>
-                    <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium whitespace-nowrap">Al: {line.endDate || "—"}</span>
+                    <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Del: {line.startDate || "—"}</span>
+                    <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Al: {line.endDate || "—"}</span>
                   </div>
                 </TableCell>
-                <TableCell className="text-right font-semibold text-zinc-900 dark:text-zinc-100 text-sm">
+                <TableCell className="text-right font-semibold text-zinc-900 dark:text-zinc-100 text-sm px-2 sm:px-4 whitespace-normal">
                   {fmt(line.totalCost)}
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right px-2 sm:px-4 whitespace-normal">
                   <div className="flex flex-col gap-0.5">
                     <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">{new Intl.NumberFormat('es-MX').format(line.realReach)}</span>
                     <span className="text-xs text-zinc-400 dark:text-zinc-500 line-through">{new Intl.NumberFormat('es-MX').format(line.estimatedReach)}</span>
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="px-2 sm:px-4 whitespace-normal">
                   <span className={cn(
                     "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition-colors select-none",
                     line.status === "Planeación" && "bg-slate-50/70 text-slate-700 border-slate-200/60 dark:bg-slate-950/20 dark:text-slate-400 dark:border-slate-800/40",
@@ -114,7 +114,7 @@ export function MediaMixTable({ lines, onEdit, onDelete }: MediaMixTableProps) {
                     {line.status}
                   </span>
                 </TableCell>
-                <TableCell className="text-center">
+                <TableCell className="text-center px-2 sm:px-4 whitespace-normal">
                   <DropdownMenu>
                     <DropdownMenuTrigger render={
                       <Button variant="ghost" className="h-9 w-9 p-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors inline-flex items-center justify-center" />

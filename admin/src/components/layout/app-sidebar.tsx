@@ -28,7 +28,7 @@ const items = [
   { title: "Resultados", url: "/results", icon: Activity },
   { title: "Evidencias", url: "/evidence", icon: FileCheck },
   { title: "Reportes", url: "/reports", icon: BarChart },
-  { title: "Recomendaciones", url: "/ai-recommendations", icon: Sparkles },
+  { title: "Recomendaciones", url: "/recommendations", icon: Sparkles },
   { title: "Configuración", url: "/settings", icon: Settings },
 ]
 

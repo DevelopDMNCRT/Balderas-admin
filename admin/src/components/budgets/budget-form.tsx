@@ -75,7 +75,7 @@ interface BudgetFormProps {
 
 export function BudgetForm({ initialData, onSubmitData, onCancel }: BudgetFormProps) {
   const form = useForm<BudgetFormValues>({
-    resolver: zodResolver(budgetFormSchema),
+    resolver: zodResolver(budgetFormSchema) as any,
     defaultValues: initialData || defaultValues,
   })
 
@@ -299,8 +299,7 @@ export function BudgetForm({ initialData, onSubmitData, onCancel }: BudgetFormPr
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pt-6 border-t border-zinc-200/80 dark:border-zinc-800/80">
-          <div className="col-span-1 md:col-span-6" />
+        <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 grid grid-cols-1 md:grid-cols-6 gap-4">
           {onCancel && (
             <div className="col-span-1 md:col-span-3">
               <Button type="button" variant="outline" className="w-full h-11" onClick={onCancel}>

@@ -1,4 +1,5 @@
 "use client"
+import { Suspense } from "react"
 
 import { useSearchParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -23,7 +24,7 @@ import {
 } from "@/components/ui/select"
 import { reportTypes } from "@/components/reports/report-types-grid"
 
-export default function NewReportPage() {
+function NewReportContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const typeParam = searchParams.get("type")
@@ -254,5 +255,13 @@ export default function NewReportPage() {
         </Form>
       </div>
     </div>
+  )
+}
+
+export default function NewReportPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-sm text-zinc-500">Cargando...</div>}>
+      <NewReportContent />
+    </Suspense>
   )
 }

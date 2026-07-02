@@ -3,10 +3,20 @@
 import { useState } from "react"
 import { Search, Filter } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import Link from "next/link"
-import { Plus } from "lucide-react"
+import { Plus, Check } from "lucide-react"
 import { EvidenceGrid, type EvidenceItem } from "@/components/evidence/evidence-grid"
+import { cn } from "@/lib/utils"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const mockEvidences: EvidenceItem[] = [
   { id: "ev-1", name: "Espectacular Periférico Sur", type: "Fotografías", campaign: "Hot Sale 2026", medium: "OOH (Exterior)", date: "01 Jul 2026", url: "https://drive.google.com/...", size: "2.4 MB" },
@@ -26,12 +36,17 @@ const mockEvidences: EvidenceItem[] = [
 
 export default function EvidencePage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [campaignFilter, setCampaignFilter] = useState("all")
 
-  const filteredItems = mockEvidences.filter(item => 
-    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.campaign.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.type.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredItems = mockEvidences.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.campaign.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.type.toLowerCase().includes(searchQuery.toLowerCase())
+    
+    const matchesCampaign = campaignFilter === "all" || item.campaign === campaignFilter
+    
+    return matchesSearch && matchesCampaign
+  })
 
   return (
     <div className="space-y-6 h-full flex flex-col">
@@ -66,10 +81,38 @@ export default function EvidencePage() {
           />
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Button variant="outline" className="w-full sm:w-auto gap-2">
-            <Filter className="h-4 w-4" />
-            Filtros
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger className={cn(buttonVariants({ variant: "outline" }), "w-full sm:w-auto gap-2")}>
+              <Filter className="h-4 w-4" />
+              Filtros {campaignFilter !== "all" ? "(1)" : ""}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Filtrar por Campaña</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem onClick={() => setCampaignFilter("all")} className="flex items-center gap-2 cursor-pointer">
+                  <Check className={cn("h-4 w-4", campaignFilter === "all" ? "opacity-100" : "opacity-0")} />
+                  <span>Todas las campañas</span>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem onClick={() => setCampaignFilter("Hot Sale 2026")} className="flex items-center gap-2 cursor-pointer">
+                  <Check className={cn("h-4 w-4", campaignFilter === "Hot Sale 2026" ? "opacity-100" : "opacity-0")} />
+                  <span>Hot Sale 2026</span>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem onClick={() => setCampaignFilter("Lanzamiento App")} className="flex items-center gap-2 cursor-pointer">
+                  <Check className={cn("h-4 w-4", campaignFilter === "Lanzamiento App" ? "opacity-100" : "opacity-0")} />
+                  <span>Lanzamiento App</span>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem onClick={() => setCampaignFilter("Campaña Navidad")} className="flex items-center gap-2 cursor-pointer">
+                  <Check className={cn("h-4 w-4", campaignFilter === "Campaña Navidad" ? "opacity-100" : "opacity-0")} />
+                  <span>Campaña Navidad</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 

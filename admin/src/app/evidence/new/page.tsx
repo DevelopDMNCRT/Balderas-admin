@@ -48,7 +48,7 @@ const evidenceTypes = [
 const formSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   type: z.enum(evidenceTypes, {
-    required_error: "Por favor selecciona un tipo de evidencia",
+    message: "Por favor selecciona un tipo de evidencia",
   }),
   campaign: z.string().min(1, "Selecciona una campaña"),
   medium: z.string().min(1, "Selecciona un medio"),

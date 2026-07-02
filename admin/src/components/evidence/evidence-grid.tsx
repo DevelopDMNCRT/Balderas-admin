@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { 
   Image as ImageIcon, 
   Video, 
@@ -81,10 +81,8 @@ export function EvidenceGrid({ items }: EvidenceGridProps) {
               {/* Action Menu (Hidden until hover on desktop) */}
               <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-full">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
+                  <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-7 w-7 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-full")}>
+                    <MoreVertical className="h-4 w-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem className="gap-2">

@@ -60,24 +60,24 @@ interface CalendarViewProps {
 
 export function CalendarView({ events }: CalendarViewProps) {
   const [currentDate, setCurrentDate] = React.useState(new Date())
-  const [view, setView] = React.useState("month")
+  const [view, setView] = React.useState("mensual")
   
   // Filters
-  const [clientFilter, setClientFilter] = React.useState("all")
-  const [campaignFilter, setCampaignFilter] = React.useState("all")
-  const [typeFilter, setTypeFilter] = React.useState("all")
-  const [responsibleFilter, setResponsibleFilter] = React.useState("all")
+  const [clientFilter, setClientFilter] = React.useState("todos")
+  const [campaignFilter, setCampaignFilter] = React.useState("todos")
+  const [typeFilter, setTypeFilter] = React.useState("todos")
+  const [responsibleFilter, setResponsibleFilter] = React.useState("todos")
 
   const handleNext = () => {
-    if (view === "month") setCurrentDate(addMonths(currentDate, 1))
-    else if (view === "week") setCurrentDate(addWeeks(currentDate, 1))
-    else if (view === "day") setCurrentDate(addDays(currentDate, 1))
+    if (view === "mensual") setCurrentDate(addMonths(currentDate, 1))
+    else if (view === "semanal") setCurrentDate(addWeeks(currentDate, 1))
+    else if (view === "diaria") setCurrentDate(addDays(currentDate, 1))
   }
 
   const handlePrev = () => {
-    if (view === "month") setCurrentDate(subMonths(currentDate, 1))
-    else if (view === "week") setCurrentDate(subWeeks(currentDate, 1))
-    else if (view === "day") setCurrentDate(subDays(currentDate, 1))
+    if (view === "mensual") setCurrentDate(subMonths(currentDate, 1))
+    else if (view === "semanal") setCurrentDate(subWeeks(currentDate, 1))
+    else if (view === "diaria") setCurrentDate(subDays(currentDate, 1))
   }
 
   // Calculate interval based on view
@@ -85,7 +85,7 @@ export function CalendarView({ events }: CalendarViewProps) {
   let endDate = currentDate
   let displayTitle = ""
 
-  if (view === "month") {
+  if (view === "mensual") {
     const monthStart = startOfMonth(currentDate)
     const monthEnd = endOfMonth(monthStart)
     startDate = startOfWeek(monthStart)
@@ -93,28 +93,28 @@ export function CalendarView({ events }: CalendarViewProps) {
     
     const formatted = format(currentDate, "MMMM yyyy", { locale: es })
     displayTitle = formatted.charAt(0).toUpperCase() + formatted.slice(1)
-  } else if (view === "week") {
+  } else if (view === "semanal") {
     startDate = startOfWeek(currentDate)
     endDate = endOfWeek(currentDate)
     
     const startStr = format(startDate, "d", { locale: es })
     const endStr = format(endDate, "d 'de' MMMM yyyy", { locale: es })
     displayTitle = `Semana del ${startStr} al ${endStr}`
-  } else if (view === "day") {
+  } else if (view === "diaria") {
     const formatted = format(currentDate, "EEEE d 'de' MMMM yyyy", { locale: es })
     displayTitle = formatted.charAt(0).toUpperCase() + formatted.slice(1)
   }
 
-  const days = view === "day" ? [currentDate] : eachDayOfInterval({
+  const days = view === "diaria" ? [currentDate] : eachDayOfInterval({
     start: startDate,
     end: endDate
   })
 
   const filteredEvents = events.filter(event => {
-    if (clientFilter !== "all" && event.client !== clientFilter) return false
-    if (campaignFilter !== "all" && event.campaign !== campaignFilter) return false
-    if (typeFilter !== "all" && event.type !== typeFilter) return false
-    if (responsibleFilter !== "all" && event.responsible !== responsibleFilter) return false
+    if (clientFilter !== "todos" && event.client !== clientFilter) return false
+    if (campaignFilter !== "todos" && event.campaign !== campaignFilter) return false
+    if (typeFilter !== "todos" && event.type !== typeFilter) return false
+    if (responsibleFilter !== "todos" && event.responsible !== responsibleFilter) return false
     return true
   })
 
@@ -159,7 +159,7 @@ export function CalendarView({ events }: CalendarViewProps) {
               <SelectValue placeholder="Cliente" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos (Cliente)</SelectItem>
+              <SelectItem value="todos">Todos (Cliente)</SelectItem>
               <SelectItem value="Acme Corp">Acme Corp</SelectItem>
               <SelectItem value="Tech Solutions">Tech Solutions</SelectItem>
             </SelectContent>
@@ -170,7 +170,7 @@ export function CalendarView({ events }: CalendarViewProps) {
               <SelectValue placeholder="Campaña" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todas (Campaña)</SelectItem>
+              <SelectItem value="todos">Todas (Campaña)</SelectItem>
               <SelectItem value="Lanzamiento Verano">Lanzamiento Verano</SelectItem>
               <SelectItem value="B2B SaaS">B2B SaaS</SelectItem>
               <SelectItem value="General">General</SelectItem>
@@ -182,7 +182,7 @@ export function CalendarView({ events }: CalendarViewProps) {
               <SelectValue placeholder="Canal" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos (Canal)</SelectItem>
+              <SelectItem value="todos">Todos (Canal)</SelectItem>
               <SelectItem value="pauta">Pauta Digital</SelectItem>
               <SelectItem value="publicacion">Publicaciones</SelectItem>
               <SelectItem value="radio">Spots de Radio</SelectItem>
@@ -200,7 +200,7 @@ export function CalendarView({ events }: CalendarViewProps) {
               <SelectValue placeholder="Responsable" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos (Resp.)</SelectItem>
+              <SelectItem value="todos">Todos (Resp.)</SelectItem>
               <SelectItem value="Finanzas">Finanzas</SelectItem>
               <SelectItem value="Ana Diseño">Ana Diseño</SelectItem>
               <SelectItem value="CM María">CM María</SelectItem>
@@ -219,9 +219,9 @@ export function CalendarView({ events }: CalendarViewProps) {
               <SelectValue placeholder="Vista" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="month">Mensual</SelectItem>
-              <SelectItem value="week">Semanal</SelectItem>
-              <SelectItem value="day">Diaria</SelectItem>
+              <SelectItem value="mensual">Mensual</SelectItem>
+              <SelectItem value="semanal">Semanal</SelectItem>
+              <SelectItem value="diaria">Diaria</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -230,9 +230,9 @@ export function CalendarView({ events }: CalendarViewProps) {
       {/* Days Header */}
       <div className={cn(
         "grid border-b bg-zinc-50/50 dark:bg-zinc-900/20 shrink-0",
-        view === "day" ? "grid-cols-1" : "grid-cols-7"
+        view === "diaria" ? "grid-cols-1" : "grid-cols-7"
       )}>
-        {(view === "day" ? [currentDate] : ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]).map((dayStr, idx) => (
+        {(view === "diaria" ? [currentDate] : ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]).map((dayStr, idx) => (
           <div key={idx} className="py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">
             {typeof dayStr === "string" ? dayStr : format(dayStr, "EEEE", { locale: es })}
           </div>
@@ -242,10 +242,10 @@ export function CalendarView({ events }: CalendarViewProps) {
       {/* Grid */}
       <div className={cn(
         "grid overflow-y-auto",
-        view === "month" ? "flex-1" : "",
-        view === "day" ? "grid-cols-1 grid-rows-1 flex-1" : "grid-cols-7",
-        view === "week" ? "grid-rows-1" : "",
-        view === "month" ? "auto-rows-[minmax(120px,auto)]" : ""
+        view === "mensual" ? "flex-1" : "",
+        view === "diaria" ? "grid-cols-1 grid-rows-1 flex-1" : "grid-cols-7",
+        view === "semanal" ? "grid-rows-1" : "",
+        view === "mensual" ? "auto-rows-[minmax(120px,auto)]" : ""
       )}>
         {days.map((day, i) => {
           const dateKey = format(day, "yyyy-MM-dd")
@@ -258,18 +258,18 @@ export function CalendarView({ events }: CalendarViewProps) {
               key={day.toString()} 
               className={cn(
                 "p-1.5 border-r border-b transition-colors flex flex-col gap-1 relative",
-                view === "month" && "hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30",
-                view === "week" && "min-h-[120px]",
-                view === "day" && "p-6 min-h-[200px]",
-                !isCurrentMonth && view === "month" && "bg-zinc-50/30 dark:bg-zinc-900/10 text-muted-foreground"
+                view === "mensual" && "hover:bg-zinc-50/50 dark:hover:bg-zinc-900/30",
+                view === "semanal" && "min-h-[120px]",
+                view === "diaria" && "p-6 min-h-[200px]",
+                !isCurrentMonth && view === "mensual" && "bg-zinc-50/30 dark:bg-zinc-900/10 text-muted-foreground"
               )}
             >
               <div className="flex justify-between items-center px-1 mb-1 shrink-0">
                 <span className={cn(
                   "font-medium flex items-center justify-center rounded-full",
-                  view === "day" ? "h-12 w-12 text-xl" : "h-7 w-7 text-sm",
+                  view === "diaria" ? "h-12 w-12 text-xl" : "h-7 w-7 text-sm",
                   isToday && "bg-black text-white dark:bg-white dark:text-black",
-                  !isCurrentMonth && !isToday && view === "month" && "text-muted-foreground/50"
+                  !isCurrentMonth && !isToday && view === "mensual" && "text-muted-foreground/50"
                 )}>
                   {format(day, "d")}
                 </span>
@@ -277,9 +277,9 @@ export function CalendarView({ events }: CalendarViewProps) {
               
               <div className={cn(
                 "flex-1 flex flex-col pr-1",
-                view === "day" ? "gap-3" : "gap-1"
+                view === "diaria" ? "gap-3" : "gap-1"
               )}>
-                {dayEvents.length === 0 && view === "day" && (
+                {dayEvents.length === 0 && view === "diaria" && (
                   <div className="text-muted-foreground text-center mt-10">
                     No hay eventos programados para este día.
                   </div>
@@ -289,7 +289,7 @@ export function CalendarView({ events }: CalendarViewProps) {
                     key={event.id}
                     className={cn(
                       "shrink-0 px-2 py-1 leading-tight font-medium rounded-md border truncate transition-opacity cursor-default",
-                      view === "day" ? "p-3 text-sm flex justify-between items-center" : "text-[10px] hover:opacity-80 cursor-pointer",
+                      view === "diaria" ? "p-3 text-sm flex justify-between items-center" : "text-[10px] hover:opacity-80 cursor-pointer",
                       typeStyles[event.type]
                     )}
                     title={`${event.title} - ${event.client} (${event.responsible})`}
@@ -298,12 +298,12 @@ export function CalendarView({ events }: CalendarViewProps) {
                       <span className="font-semibold truncate">{event.title}</span>
                       <span className={cn(
                         "opacity-80 truncate",
-                        view === "day" ? "text-xs mt-1" : "text-[9px]"
+                        view === "diaria" ? "text-xs mt-1" : "text-[9px]"
                       )}>
                         {event.client} • {event.campaign}
                       </span>
                     </div>
-                    {view === "day" && (
+                    {view === "diaria" && (
                       <div className="text-right flex flex-col items-end shrink-0 ml-4">
                         <span className="capitalize font-bold text-xs opacity-90">{event.type}</span>
                         <span className="text-xs opacity-80 mt-1">{event.responsible}</span>
